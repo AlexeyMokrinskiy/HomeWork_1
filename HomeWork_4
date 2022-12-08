@@ -1,0 +1,209 @@
+'''
+1. Вычислить число π c заданной точностью d
+*Пример:* 
+- при $d = 0.001, π = 3.141.$    $10^{-1} ≤ d ≤10^{-10}$
+'''
+
+# from math import pi
+
+# d =  str(input("Введите число для заданной точности числа Пи: "))
+
+# num_round = d.count('0')
+
+# print(f'- при $d = {d}, π = {round(pi, num_round)}')
+
+'''
+2 Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
+*Пример*
+- при N=236     ->        [2, 2, 59]
+'''
+
+# N =  int(input("Введите число N: "))
+
+# def multiplers(n):
+#    i = 2
+#    mult = []
+#    while i * i <= n:
+#        while n % i == 0:
+#            mult.append(i)
+#            n = n / i
+#        i = i + 1
+#    if n > 1:
+#        mult.append(n)
+#    return mult
+
+# print('при N =',N, '->', multiplers(N))
+
+'''
+3. Задайте последовательность чисел. Напишите программу, 
+которая выведет список неповторяющихся элементов исходной последовательности.
+*Пример*
+- при [1, 1, 2, 3, 3, 4, 1, 5, 7, 8, 8, 7, 9]     ->        [2, 4, 5, 9]
+'''
+
+# from random import Random, randint
+
+# size = int(input('Введите размер списка '))
+
+# random_list = []
+# for i in range(size):
+#     random_list.append(randint(0, 5)) 
+# print('при ', random_list, '->', end=' ')
+
+# new_list = []
+# for i in random_list:
+#     if i not in new_list:
+#         new_list.append(i)
+
+# print(new_list)
+
+'''
+4 Задана натуральная степень k. Сформировать случайным образом список коэффициентов 
+(значения от 0 до 100) многочлена и записать в файл многочлен степени k.
+*Пример:* 
+- k=2 => 2*x² + 4*x + 5 = 0 или x² + 5 = 0 или 10*x² = 0
+'''
+
+# from random import Random, randint
+
+# k = int(input('Задайте натуральную степень k: ')) # Будет работать не очень красиво, если больше 10 (из-за реплейса (стр79-80))
+
+# lst = [f'{randint(1, 100)}x^{k}']
+# for i in range(k - 1, -1 , -1):
+#     lst.append(f'{randint(-100, 100)}x^{i}')
+# lst.append('= 0')
+# print(lst)
+
+# polynom = '|'.join(lst)
+# polynom = polynom.replace('|-', ' - ')
+# polynom = polynom.replace('|', ' + ')
+# polynom = polynom.replace('x^1', 'x')
+# polynom = polynom.replace('x^0', '')
+# polynom = polynom.replace('+ = 0', '= 0')
+# print(polynom)
+
+# data = open('text_to_tusk04', 'w')
+# data.writelines(polynom)
+# data.close()
+
+'''
+5. Даны два файла, в каждом из которых находится запись многочлена. 
+Задача - сформировать файл, содержащий сумму многочленов.
+Коэффициенты могут быть как положительными, так и отрицательными. 
+Степени многочленов могут отличаться.
+'''
+# # Импортируем многочлен из 4ого задания для дальнейшего сложения___________
+
+import math
+
+path_1 = 'c:/Users/user/Desktop/облако/python/text_to_tusk04'
+f_1 = open(path_1, 'r')
+first_polynom = f_1.read()
+# print(firs_polynom)
+f_1.close
+
+first_polynom = first_polynom.replace(' = 0', '')
+first_polynom = first_polynom.replace('x ', 'x^1 ')
+first_polynom = first_polynom.replace(' + ', ' ')
+first_polynom = first_polynom.replace(' - ', ' -')
+first_polynom = first_polynom.replace('x^', '')
+
+first_polynom_lst = first_polynom.split(' ')
+
+first_poly = []
+for i in first_polynom_lst:
+    first_poly.append(int(i))
+lust_el = first_poly[-1]
+
+first_poly.pop(-1)
+first_poly1 = []
+for i in first_poly:
+    j = i/10
+    first_poly1.append(math.trunc(j))
+
+first_poly1.append(lust_el)
+first_pol_revers = first_poly1[::-1]
+
+# # Создаём новый многочлен и помещам его в новый файл_________
+
+from random import Random, randint
+
+k1 = int(input('Задайте натуральную степень k: ')) # Будет работать не очень красиво, если больше 10 (из-за реплейса (стр79-80))
+
+lst1 = [f'{randint(1, 100)}x^{k1}']
+for i in range(k1 - 1, -1 , -1):
+    lst1.append(f'{randint(-100, 100)}x^{i}')
+lst1.append('= 0')
+
+polynom1 = '|'.join(lst1)
+polynom1 = polynom1.replace('|-', ' - ')
+polynom1 = polynom1.replace('|', ' + ')
+polynom1 = polynom1.replace('x^1', 'x')
+polynom1 = polynom1.replace('x^0', '')
+polynom1 = polynom1.replace('+ = 0', '= 0')
+
+data1 = open('text_to_tusk05', 'w')
+data1.writelines(polynom1)
+data1.close()
+
+# # Забираем второй многочлен для сложения___________________
+
+import math
+
+path_2 = 'c:/Users/user/Desktop/облако/python/text_to_tusk05'
+f_2 = open(path_2, 'r')
+second_polynom = f_2.read()
+# print(firs_polynom)
+f_2.close
+
+second_polynom = second_polynom.replace(' = 0', '')
+second_polynom = second_polynom.replace('x ', 'x^1 ')
+second_polynom = second_polynom.replace(' + ', ' ')
+second_polynom = second_polynom.replace(' - ', ' -')
+second_polynom = second_polynom.replace('x^', '')
+
+second_polynom_lst = second_polynom.split(' ')
+
+second_poly = []
+for i in second_polynom_lst:
+    second_poly.append(int(i))
+lust_el1 = second_poly[-1]
+
+second_poly.pop(-1)
+second_poly1 = []
+for i in second_poly:
+    j = i/10
+    second_poly1.append(math.trunc(j))
+
+second_poly1.append(lust_el1)
+second_pol_revers = second_poly1[::-1]
+## print(second_poly1)
+print('Первый многочлен: ', first_pol_revers)
+print('Второй многочлен: ', second_pol_revers)
+
+first_pol_revers.extend([0,] * (len(second_pol_revers) - len(first_pol_revers)))
+second_pol_revers.extend([0,] * (len(first_pol_revers) - len(second_pol_revers)))
+
+sum_poly = list(map(sum, zip(first_pol_revers, second_pol_revers)))
+print('Сумма многочленов: ' ,sum_poly)
+
+
+sum_poly1 = []
+for (num,item) in enumerate(sum_poly):
+    sum_poly1.append(f'{item}|{num}')
+
+sum_poly1 = sum_poly1[::-1]
+sum_poly1.append('= 0')
+sum_poly_joind = ' '.join(sum_poly1)
+sum_poly_joind = sum_poly_joind.replace("|", 'x^')
+sum_poly_joind = sum_poly_joind.replace(" ", ' + ')
+sum_poly_joind = sum_poly_joind.replace(" + -", ' - ')
+sum_poly_joind = sum_poly_joind.replace(" + = +", ' = ')
+sum_poly_joind = sum_poly_joind.replace("x^1", 'x ')
+sum_poly_joind = sum_poly_joind.replace("x^0", '')
+
+print(sum_poly_joind)
+
+data = open('text_to_tusk05_sum', 'w')
+data.writelines(sum_poly_joind)
+data.close()
